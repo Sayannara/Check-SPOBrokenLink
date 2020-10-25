@@ -7,21 +7,21 @@
 ##################################################################################################
 cls
    
-. "\\fednet.local\dataspace\ITManagement\ScriptsRepository\Categories\SharePoint\Functions\Get-SPSitePagesContent.ps1"
-. "\\fednet.local\dataspace\ITManagement\ScriptsRepository\Categories\SharePoint\Functions\Encode-HumanReadability.ps1"
-. "\\fednet.local\dataspace\ITManagement\ScriptsRepository\Categories\SharePoint\Functions\Test-URL.ps1"
+. ".\Get-SPSitePagesContent.ps1"
+. ".\Encode-HumanReadability.ps1"
+. ".\Test-URL.ps1"
 
 $ArrayURLStatus = @()
 
 # It seems that it is mandatory to authenticate on the root site for the connection to work
-Connect-PnPOnline -url "https://fvecorp.sharepoint.com" -ClientId "d4e493c3-b144-4cb8-a851-94764478895b" -ClientSecret "/5sCDBTn1X+r8Ca57/mvVtzgLnUMCnjNkXtqXGnhBMc="
+Connect-PnPOnline -url "https://MyTenant.sharepoint.com" -ClientId "" -ClientSecret ""
 
 # START
 ##################################################################################################
 
 
 # List all sites
-$TenantSites = Get-PnPTenantSite | ? {($_.Template -eq "SitePagePublishing#0" -and ($_.URL -eq "https://fvecorp.sharepoint.com/sites/INF")) } | Select -ExpandProperty URL  # -and ($_.URL -eq "https://fvecorp.sharepoint.com/sites/INF") Add filter hrere for your tests
+$TenantSites = Get-PnPTenantSite | ? {($_.Template -eq "SitePagePublishing#0" -and ($_.URL -eq "https://MyTenant.sharepoint.com/sites/INF")) } | Select -ExpandProperty URL  # -and ($_.URL -eq "https://MyTenant.sharepoint.com/sites/INF") Add filter hrere for your tests
 
 # pour chaque site sur le tenant
 foreach($TenantSite in $TenantSites){
@@ -76,7 +76,7 @@ foreach($TenantSite in $TenantSites){
 $ArrayURLStatus | ft
 
 
-Connect-PnPOnline -url "https://fvecorp.sharepoint.com/sites/config" -ClientID "d4e493c3-b144-4cb8-a851-94764478895b" -ClientSecret "/5sCDBTn1X+r8Ca57/mvVtzgLnUMCnjNkXtqXGnhBMc="
+Connect-PnPOnline -url "https://MyTenant.sharepoint.com/sites/config" -ClientID "" -ClientSecret ""
 # Remove all items
 $List = "Vérification liens sites"
 
