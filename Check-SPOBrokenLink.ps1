@@ -1,8 +1,3 @@
-﻿# OK => (https|http)://.+?("|')
-# OK => \b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))
-# https://mathiasbynens.be/demo/url-regex
-# https://regex101.com/
-
 # Variables 
 ##################################################################################################
 cls
@@ -12,16 +7,21 @@ cls
 . ".\Test-URL.ps1"
 
 $ArrayURLStatus = @()
+$MyTenantURL = "https://MyTenant.sharepoint.com"
+$ClientID = ""
+$ClientSecret = ""
+$Library = "Pages%20du%20site" # depends of the site's language
+$i = 0
+$j = 0
+
+# List all sites
+$TenantSites = Get-PnPTenantSite | ? {($_.Template -eq "SitePagePublishing#0") } | Select -ExpandProperty URL  # -and ($_.URL -eq "$MyTenantURL/sites/INF") Add filter hrere for your tests
 
 # It seems that it is mandatory to authenticate on the root site for the connection to work
-Connect-PnPOnline -url "https://MyTenant.sharepoint.com" -ClientId "" -ClientSecret ""
+Connect-PnPOnline -url $MyTenantURL -ClientId $ClientID -ClientSecret $ClientSecret
 
 # START
 ##################################################################################################
-
-
-# List all sites
-$TenantSites = Get-PnPTenantSite | ? {($_.Template -eq "SitePagePublishing#0" -and ($_.URL -eq "https://MyTenant.sharepoint.com/sites/INF")) } | Select -ExpandProperty URL  # -and ($_.URL -eq "https://MyTenant.sharepoint.com/sites/INF") Add filter hrere for your tests
 
 # pour chaque site sur le tenant
 foreach($TenantSite in $TenantSites){
@@ -30,7 +30,7 @@ foreach($TenantSite in $TenantSites){
     write-host "`nTenantSite: $TenantSite" -b Yellow
     
     # Obtenir le contenu de toutes les pages du site
-    $TenantSitePages = Get-SPSitePagesContent -SiteURL $TenantSite -Library "Pages%20du%20site" | ? Title -like B* # Add filter hrere for your tests
+    $TenantSitePages = Get-SPSitePagesContent -SiteURL $TenantSite -Library $Library #| ? Title -like B* # Add filter hrere for your tests
     
     # pour chaque pages que détient le Tenant, modifier le contenu pour que l'encodage soit lisible
     foreach($TenantSitePage in $TenantSitePages){
@@ -74,20 +74,3 @@ foreach($TenantSite in $TenantSites){
 }
 
 $ArrayURLStatus | ft
-
-
-Connect-PnPOnline -url "https://MyTenant.sharepoint.com/sites/config" -ClientID "" -ClientSecret ""
-# Remove all items
-$List = "Vérification liens sites"
-
-$Items = Get-PnPListItem -List $List
-foreach($item in $items){
-    Remove-PnPListItem -List $List -Identity $Item.id -Force
-}
-
-# Add items
-foreach($URL in $ArrayURLStatus){
-    if($URL.Status -eq "NOK"){
-        Add-PnPListItem -list $List -Values @{"Title" = $URL.Site; "Page" = $URL.Page; "URL" = $URL.URL; "Statut" = $URL.Status}
-    }
-}
