@@ -25,16 +25,16 @@ Connect-PnPOnline -url $MyTenantURL -ClientId $ClientID -ClientSecret $ClientSec
 # START
 ##################################################################################################
 
-# pour chaque site sur le tenant
+# for each site in the tenant
 foreach($TenantSite in $TenantSites){
     $i = $i + 1
     Write-Progress -Activity Updating -Status 'Progress->' -PercentComplete ($i/$TenantSites.Count*100) -CurrentOperation "Site collections"
     write-host "`nTenantSite: $TenantSite" -b Yellow
     
-    # Obtenir le contenu de toutes les pages du site
+    # get the contents of all the pages of the site
     $TenantSitePages = Get-SPSitePagesContent -SiteURL $TenantSite -Library $Library #| ? Title -like B* # Add filter hrere for your tests
     
-    # pour chaque pages que détient le Tenant, modifier le contenu pour que l'encodage soit lisible
+    # for each page, modify the content so that the content is readable by a human being
     foreach($TenantSitePage in $TenantSitePages){
         $j = $j + 1
         Write-Progress -Id 1 -Activity Updating -Status 'Progress' -PercentComplete ($j/$TenantSitePages.Count*100) -CurrentOperation "Pages"
@@ -46,18 +46,18 @@ foreach($TenantSite in $TenantSites){
         write-host "TenantSitePageContentHumans" -b Yellow
         $TenantSitePageContentHumans
 
-        # the pattern used which look for the last char ("|'). This is the only way I found to delimit URL. 
+        # the pattern used which look for the last char ("|'). This is the best way I found to delimit URL 
         $TenantSitePageContentHumanURLs = $TenantSitePageContentHumans | select-string -Pattern "(https|http)://.+?(`"|')" -AllMatches
         write-host "TenantSitePageContentHumanURLs" -b Yellow
         $TenantSitePageContentHumanURLs
 
         # $TenantSitePageContentHumanURLsNumberMatches = $TenantSitePageContentHumanURLs.matches.index.Count
 
-        # As is, if $TenantSitePageContentHumanURLs is empty, an error occurs
+        # as is, if $TenantSitePageContentHumanURLs is empty, an error occurs
         foreach($TenantSitePageContentHumanURL in $TenantSitePageContentHumanURLs[0].Matches ){
             write-host "`nTenantSitePageContentHumanURL: $TenantSitePageContentHumanURL" -b Yellow
 
-            # We could try to clean the URL
+            # we could try to clean the URL
             $TenantSitePageContentHumanURL = $TenantSitePageContentHumanURL.Value.Replace('"',"")
 
             $URLStatus = Test-URL $TenantSitePageContentHumanURL
