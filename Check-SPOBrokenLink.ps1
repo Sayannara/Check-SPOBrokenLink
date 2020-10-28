@@ -4,7 +4,7 @@ cls
 
 $path = $myInvocation.invocationName; $path = split-path -parent $path; set-location $path 
    
-. ".\Get-SPSitePagesContent.ps1"
+. ".\Get-SPOSitePagesContent.ps1"
 . ".\Encode-HumanReadability.ps1"
 . ".\Test-URL.ps1"
 
