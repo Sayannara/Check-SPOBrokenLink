@@ -9,8 +9,8 @@ As is, this is my tool to check broken links in SharePoint Online. The tool need
 3. Set a test filter in $TenantSites
 4. Set a test filter in $TenantSitePages
 
-# Next improvments could be...
+# Next improvements could be...
 1. Find a better regex pattern to identify URL
 2. Consider using ConvertFrom-Json to obtain an object of the page's content
-3. Currently pages are checked, we need to look in libraries too
+3. Currently only pages are checked, we need to look in libraries too
 4. Improve code in general
