@@ -1,4 +1,4 @@
-﻿Function Get-SPSitePagesContent{
+﻿Function Get-SPOSitePagesContent{
  <#
 		.SYNOPSIS
 		Return all pages of a site collection and their content
@@ -13,13 +13,13 @@
 		the library whose pages you would like to obtain
 
 		.EXAMPLE
-		Get-SPSitePagesContent -SiteURL "https://YourTenant.sharepoint.com/sites/inf" -Library "Pages%20du%20site" 
+		Get-SPOSitePagesContent -SiteURL "https://YourTenant.sharepoint.com/sites/inf" -Library "Pages%20du%20site" 
 
 		.EXAMPLE
-		$Pages = Get-SPSitePagesContent -SiteURL "https://YourTenant.sharepoint.com"
+		$Pages = Get-SPOSitePagesContent -SiteURL "https://YourTenant.sharepoint.com"
 		
 		.NOTES
-		FunctionName : Get-SPSitePagesContent
+		FunctionName : Get-SPOSitePagesContent
 		Created by   : Yann Greder
 		Date Coded   : 09/24/2020
 		Source       : 
@@ -48,5 +48,3 @@
 
     Return $ArrayPages
 }
-
-# $Pages = Get-SPSitePagesContent -SiteURL "https://fvecorp.sharepoint.com/sites/inf/" -Library "Pages%20du%20site" 
