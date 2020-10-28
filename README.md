@@ -1,7 +1,7 @@
 # Welcome
 Check-SPOBrokenLink detects and lists all broken links within SharePoint Online sites.
 
-As is, this is my tool to check broken links in SharePoint Online. The tool need many improvments. Feel free to use it, if you improve it, please share it with me.
+As is, this is my tool to check broken links in SharePoint Online. The tool need many improvments. Feel free to use it, if you improve it, please share with me.
 
 # How to use it ?
 1. Download all the files a put them all in a same directory
