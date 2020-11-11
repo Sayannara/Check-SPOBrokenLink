@@ -7,10 +7,9 @@
 		The URL to be checked
 
 		.EXAMPLE
-		$URLStatus = Test-URL -URL https://fvecorp.sharepoint.com
+		$URLStatus = Test-URL -URL https://MyTenant.sharepoint.com
 #>
-
-		
+	
     Param
     (
         [Parameter(Mandatory=$true)]$URL
@@ -23,7 +22,6 @@
             ".docx$" {write-host "The file is a Word"; $IsFile = $true}
             Default  {write-host "This is site page" ; $IsFile = $false}
         }
-        
 
         if($IsFile){
             if(Test-Path -Path URL){
@@ -52,7 +50,3 @@
 
     Return $Status
 }
-
-
-
-# $URLStatus = Test-URL -URL https://fvecorp.sharepoint.com
