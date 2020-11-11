@@ -43,14 +43,14 @@ foreach($TenantSite in $TenantSites){
         write-host "`nTenantSitePage" -b Yellow
         $TenantSitePage.Title
 
-		  # modify the content to be readable by a human being
+	# modify the content to be readable by a human being
         $TenantSitePageContentHumans = Encode-HumanReadability -ContentRaw $TenantSitePage.Content
         
         write-host "TenantSitePageContentHumans" -b Yellow
         $TenantSitePageContentHumans
 
         # the pattern used which look for the last char ("|'). This is the best way I found to delimit URL
-		  # detect all URLs
+	# detect all URLs
         $TenantSitePageContentHumanURLs = $TenantSitePageContentHumans | select-string -Pattern $URLPatern -AllMatches
         write-host "TenantSitePageContentHumanURLs" -b Yellow
         $TenantSitePageContentHumanURLs
@@ -58,14 +58,14 @@ foreach($TenantSite in $TenantSites){
         # $TenantSitePageContentHumanURLsNumberMatches = $TenantSitePageContentHumanURLs.matches.index.Count
 
         # as is, if $TenantSitePageContentHumanURLs is empty, an error occurs
-		  # for each detected URL
+	# for each detected URL
         foreach($TenantSitePageContentHumanURL in $TenantSitePageContentHumanURLs[0].Matches ){
             write-host "`nTenantSitePageContentHumanURL: $TenantSitePageContentHumanURL" -b Yellow
 
             # we could try to clean the URL
             $TenantSitePageContentHumanURL = $TenantSitePageContentHumanURL.Value.Replace('"',"")
 			
-			   # test URL
+	    # test URL
             $URLStatus = Test-URL $TenantSitePageContentHumanURL
 
             $ObjURLStatus = [PSCustomObject]@{
