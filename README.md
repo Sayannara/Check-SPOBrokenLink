@@ -12,5 +12,5 @@ As is, this is my tool to check broken links in SharePoint Online. The tool need
 # Next improvements could be...
 1. Find a better regex pattern to identify URL
 2. Consider using ConvertFrom-Json to obtain an object of the page's content
-3. Currently only pages are checked, we need to look in libraries too
+3. Currently only pages are checked, we need to look in lists too
 4. Improve code in general
