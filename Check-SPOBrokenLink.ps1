@@ -34,7 +34,7 @@ foreach($TenantSite in $TenantSites){
     write-host "`nTenantSite: $TenantSite" -b Yellow
     
     # get the contents of all the pages of the site
-    $TenantSitePages = Get-SPSitePagesContent -SiteURL $TenantSite -Library $Library #| ? Title -like B* # Add filter hrere for your tests
+    $TenantSitePages = Get-SPOSitePagesContent -SiteURL $TenantSite -Library $Library #| ? Title -like B* # Add filter hrere for your tests
     
     # for each page
     foreach($TenantSitePage in $TenantSitePages){
