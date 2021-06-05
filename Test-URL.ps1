@@ -32,6 +32,7 @@
             }
         }
         else{
+		# if this step goes wrong, try using Invoke-WebRequest $URL -UseBasicParsing
             $SiteStatus = Invoke-WebRequest $URL
 
             if($SiteStatus.StatusCode -eq "200"){
